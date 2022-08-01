@@ -1,5 +1,6 @@
 // import functions and grab DOM elements
 import { renderGame } from './render-utils.js';
+import { renderTeam } from './render-utils.js';
 const currentGameEl = document.getElementById('current-game-container');
 const pastGamesEl = document.getElementById('past-games-container');
 
@@ -11,6 +12,10 @@ const teamTwoSubtractButton = document.getElementById('team-two-subtract-button'
 const finishGameButton = document.getElementById('finish-game-button');
 const teamOneLabel = document.getElementById('team-one-name');
 const teamTwoLabel = document.getElementById('team-two-name');
+const teamOneInput = document.getElementById('team-one');
+const teamTwoInput = document.getElementById('team-two');
+
+
 
 // create an array to hold on to the state of past games
 
@@ -18,13 +23,24 @@ let name1 = '';
 let name2 =  '';
 let score1 = 0;
 let score2 = 0;
+let pastGames = [];
 
 nameFormButton.addEventListener('click', () => {
     // get the name data from the form
+    const teamOneName = teamOneInput.value;
+    teamOneLabel.textContent = teamOneName;
+    const teamTwoName = teamTwoInput.value;
+    teamTwoLabel.textContent = teamTwoName;
+    
 
     // set the state to this data from the form
+    teamOneInput.value = '';
+    teamTwoInput.value = '';
+
 
     // reset the form values
+
+    renderGame('name1, name2, score1, score2');
 
     // refresh the current game element with new data by calling the appropriate function
 });
@@ -32,25 +48,41 @@ nameFormButton.addEventListener('click', () => {
 
 teamOneAddButton.addEventListener('click', () => {
     // increment the current state for team one's score
+    currentGameEl.textContent = '';
+    score1++;
+    const teamDiv1 = renderGame(name1, score1, name2, score2);
+    currentGameEl.append(teamDiv1);
     
     // refresh the current game element with new data by calling the appropriate function
+
 });
 
 teamTwoAddButton.addEventListener('click', () => {
     // increment the current state for team two's score
+    currentGameEl.textContent = '';
+    score2++;
+    const teamDiv2 = renderGame(name1, score1, name2, score2);
+    currentGameEl.append(teamDiv2);
 
     // refresh the current game element with new data by calling the appropriate function
 });
 
 teamOneSubtractButton.addEventListener('click', () => {
     // decrement the current state for team one's score
+    currentGameEl.textContent = '';
+    score1--;
+    const teamDiv1 = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(teamDiv1);
 
     // refresh the current game element with new data by calling the appropriate function
 });
 
 teamTwoSubtractButton.addEventListener('click', () => {
     // decrement the current state for team two's score
-
+    currentGameEl.textContent = '';
+    score2--;
+    const teamDiv2 = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(teamDiv2);
     // refresh the current game element with new data by calling the appropriate function
 });
 
